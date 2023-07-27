@@ -1,5 +1,4 @@
 const express = require("express");
-// const action = require("./lib/actions");
 const inquire = require("./utils/inquire");
 
 const PORT = process.env.PORT || 3001;
