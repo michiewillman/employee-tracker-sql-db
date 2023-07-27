@@ -20,3 +20,6 @@ VALUES ("Greg", "Harbour", 1, 7),
 ("Shane", "Anderson", 6, 7),
 ("Jonathan", "Hyde", 7, 8),
 ("Alexander", "Merritt", 8, 7);
+
+-- Getting error...
+-- ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`employee_db`.`employees`, CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE)
