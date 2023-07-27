@@ -1,4 +1,4 @@
-const 
+const actions = require("../lib/actions");
 
 // Switch cases for user chosen action
 function findCase(answers) {

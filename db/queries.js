@@ -1,4 +1,4 @@
-const db = require("../db/connection");
+const db = require("./connection");
 
 // All actions available on the db connection
 function findAllRoles() {
@@ -57,6 +57,7 @@ function updateEmployee(employee) {
   return db.query("SELECT * FROM employees WHERE ");
 }
 
+// Export queries to use in actions.js
 module.exports = {
   findAllRoles,
   findAllDepartments,
