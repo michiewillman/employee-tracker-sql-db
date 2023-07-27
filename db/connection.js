@@ -6,10 +6,10 @@ const db = mysql.createConnection(
     host: "localhost",
     user: "root",
     password: "",
-    database: "employees_db",
+    database: "employee_db",
   },
   () => {
-    console.log(`Connected to the database employees_db`);
+    console.log(`Connected to the database employee_db`);
   }
 );
 
