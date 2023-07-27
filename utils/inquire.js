@@ -1,8 +1,9 @@
 const { prompt } = require("inquirer");
 const questions = require("../lib/questions");
+const { findCase } = require("./findcase");
 
-function ask() {
-  prompt(questions);
+function inquire() {
+  prompt(questions).then((answers) => {
+    findCase(answers);
+  });
 }
-
-module.exports = ask;
