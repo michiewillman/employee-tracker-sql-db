@@ -1,5 +1,5 @@
 const { prompt } = require("inquirer");
-const { findCase } = require("./findcase");
+const { runAction } = require("./runAction");
 
 const actionPrompt = [
   {
@@ -23,7 +23,7 @@ const actionPrompt = [
 // Then find the switch case that matches
 function inquire() {
   prompt(actionPrompt).then((answers) => {
-    findCase(answers).catch((err) => {
+    runAction(answers).catch((err) => {
       console.log(err);
     });
   });

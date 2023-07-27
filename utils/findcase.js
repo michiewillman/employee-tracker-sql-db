@@ -1,7 +1,7 @@
 const actions = require("../lib/actions");
 
 // Switch cases for user chosen action
-function findCase(answers) {
+function runAction(answers) {
   switch (answers.action) {
     case "View all employees":
       findAllEmployees();
@@ -29,4 +29,4 @@ function findCase(answers) {
   }
 }
 
-module.exports = { findCase };
+module.exports = { runAction };
