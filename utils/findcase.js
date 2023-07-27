@@ -1,3 +1,5 @@
+const 
+
 // Switch cases for user chosen action
 function findCase(answers) {
   switch (answers.action) {
