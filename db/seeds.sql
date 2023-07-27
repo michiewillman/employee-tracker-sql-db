@@ -8,13 +8,15 @@ VALUES ("Customer Support", 60000, 1),
 ("Senior Designer", 75000, 4),
 ("Marketing Coordinator", 50000, 4),
 ("Software Engineer", 120000, 5),
-("Director of Engineering", 240000, 5);
+("Director Engineering", 240000, 5),
+("Director Sales", 290000, 6);
 
--- INSERT INTO employee ()
--- VALUES ("Greg", "Harbour", 1, __),
--- ("Chelsea", "Rudd", 2, __),
--- ("Karen", "McCormick", 3, __),
--- ("Dave", "Dawson", 4, __),
--- ("Olivia", "Stonish", 6, __),
--- ("Shane", "Anderson", 5, __),
--- ("Jonathan", "Hyde", 6, __),
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Greg", "Harbour", 1, 7),
+("Chelsea", "Rudd", 2, 8),
+("Karen", "McCormick", 3, 6),
+("Dave", "Dawson", 4, 7),
+("Olivia", "Stonish", 5, 8),
+("Shane", "Anderson", 6, 7),
+("Jonathan", "Hyde", 7, 8),
+("Alexander", "Merritt", 8, 7);
