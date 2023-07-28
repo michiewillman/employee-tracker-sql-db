@@ -25,7 +25,7 @@ function runAction(answers) {
       updateEmployee();
       break;
     case "Quit":
-      quit();
+      process.exit();
   }
 }
 
