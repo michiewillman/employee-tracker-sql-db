@@ -1,5 +1,5 @@
 const express = require("express");
-const inquire = require("./utils/inquire");
+const { askUser } = require("./utils/inquire");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Start questions
-inquire();
+askUser();
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
@@ -17,5 +17,3 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-
-init();

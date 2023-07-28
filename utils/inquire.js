@@ -21,7 +21,7 @@ const actionPrompt = [
 
 // Ask user for main action choice
 // Then find the switch case that matches
-function inquire() {
+function askUser() {
   prompt(actionPrompt).then((answers) => {
     runAction(answers).catch((err) => {
       console.log(err);
@@ -30,4 +30,4 @@ function inquire() {
 }
 
 // Export to server.js
-module.exports = { inquire };
+module.exports = { askUser };
