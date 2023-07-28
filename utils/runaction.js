@@ -1,28 +1,28 @@
-const actions = require("../lib/actions");
+const Actions = require("../lib/actions");
 
 // Switch cases for user chosen action
 function runAction(answers) {
   switch (answers.action) {
     case "View all employees":
-      findAllEmployees();
+      Actions.findAllEmployees();
       break;
     case "View all roles":
-      findAllRoles();
+      Actions.findAllRoles();
       break;
     case "View all departments":
-      findAllDepartments();
+      Actions.findAllDepartments();
       break;
     case "Add employee":
-      insertEmployee();
+      Actions.insertEmployee();
       break;
     case "Add role":
-      insertRole();
+      Actions.insertRole();
       break;
     case "Add department":
-      insertDepartment();
+      Actions.insertDepartment();
       break;
     case "Update employee":
-      updateEmployee();
+      Actions.updateEmployee();
       break;
     case "Quit":
       process.exit();
