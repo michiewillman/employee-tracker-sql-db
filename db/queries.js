@@ -1,9 +1,9 @@
-const db = require("./connection");
+const connection = require("./connection");
 
 // All actions available on the db connection
 class DB {
   findAllRoles() {
-    return db.query("SELECT * FROM roles", (err, result) => {
+    return connection.query("SELECT * FROM roles", (err, result) => {
       if (err) {
         console.log(err);
       }
@@ -12,7 +12,7 @@ class DB {
   }
 
   findAllDepartments() {
-    return db.query("SELECT * FROM departments", (err, result) => {
+    return connection.query("SELECT * FROM departments", (err, result) => {
       if (err) {
         console.log(err);
       }
@@ -21,7 +21,7 @@ class DB {
   }
 
   findAllEmployees() {
-    return db.query("SELECT * FROM employees", (err, result) => {
+    return connection.query("SELECT * FROM employees", (err, result) => {
       if (err) {
         console.log(err);
       }
@@ -30,7 +30,7 @@ class DB {
   }
 
   findManagers(employee) {
-    return db.query(
+    return connection.query(
       "SELECT * FROM employees WHERE !id = ?",
       employee,
       (err, result) => {
@@ -43,21 +43,57 @@ class DB {
   }
 
   insertEmployee(employee) {
-    return db.query("INSERT INTO employees () VALUES ()");
+    return connection.query(
+      "INSERT INTO employees () VALUES ?",
+      employee,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      }
+    );
   }
 
   insertRole(role) {
-    return db.query("INSERT INTO roles () VALUES ()");
+    return connection.query(
+      "INSERT INTO roles () VALUES ?",
+      role,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      }
+    );
   }
 
   insertDepartment(department) {
-    return db.query("INSERT INTO departments () VALUES ()");
+    return connection.query(
+      "INSERT INTO departments () VALUES ?",
+      department,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      }
+    );
   }
 
   updateEmployee(employee) {
-    return db.query("SELECT * FROM employees WHERE ");
+    return connection.query(
+      "SELECT * FROM employees WHERE id = ?",
+      employee,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      }
+    );
   }
 }
 
 // Export queries to use in actions.js
-module.exports = { DB };
+module.exports = { DB, connection };
