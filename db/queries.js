@@ -2,6 +2,10 @@ const connection = require("./connection");
 
 // All actions available on the db connection
 class DB {
+  constructor(connection) {
+    this.connection = connection;
+  }
+
   findAllRoles() {
     return connection.query("SELECT * FROM roles", (err, result) => {
       if (err) {
