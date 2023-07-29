@@ -76,38 +76,53 @@ function veiwAllDepartments() {
 }
 
 function addEmployee() {
-  prompt(
-    [
-      {
-        name: "firstName",
-        type: "input",
-        message: "What is the employee's first name?",
-      },
-      {
-        name: "lastName",
-        type: "input",
-        message: "What is the employee's last name?",
-      },
-      {
-        name: "role",
-        type: "list",
-        message: "What is the employee's role?",
-        // choices: ,
-      },
-      {
-        name: "manager",
-        type: "list",
-        message: "Who is their manager?",
-        // choices: all employees - themselves,
-      },
-    ]
-      .then((res) => {
-        db.insertEmployee(employee);
-        res.json(`Employee has been added.`);
-      })
-      .then(prompt(mainPrompt))
-      .catch(error)
-  );
+  db.findAllRoles().then(([data]) => {
+    const roleData = data.map(({ title, id }) => ({
+      title: title,
+      value: id,
+    }));
+    db.findAllEmployees().then(([data]) => {
+      const managerData = data.map(({ first_name, last_name, id }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id,
+      }));
+
+      prompt(
+        [
+          {
+            name: "first_name",
+            type: "input",
+            message: "What is the employee's first name?",
+          },
+          {
+            name: "last_name",
+            type: "input",
+            message: "What is the employee's last name?",
+          },
+          {
+            name: "title",
+            type: "list",
+            message: "What is the employee's role?",
+            choices: roleData,
+          },
+          {
+            name: "manager_id",
+            type: "list",
+            message: "Who is their manager?",
+            choices: managerData,
+          },
+        ]
+          .then((res) => {
+            db.insertEmployee(res);
+            res.json(`Employee has been added.`);
+          })
+          .then(prompt(mainPrompt))
+          .catch((error) => {
+            console.status(404).json(`Sorry, error adding employee.`);
+          })
+      );
+    });
+  });
 }
 
 function addRole() {
