@@ -28,28 +28,26 @@ function askUser() {
         viewAllEmployees()
         break;
       case "View all roles":
-        // Actions.findAllRoles();
+        findAllRoles();
         break;
       case "View all departments":
-        // Actions.findAllDepartments();
+        findAllDepartments();
         break;
       case "Add employee":
-        // Actions.insertEmployee();
+        insertEmployee();
         break;
       case "Add role":
-        // Actions.insertRole();
+        insertRole();
         break;
       case "Add department":
-        // Actions.insertDepartment();
+        insertDepartment();
         break;
       case "Update employee":
-        // Actions.updateEmployee();
+        updateEmployee();
         break;
       default:
         process.exit();
     }
   });
 }
-
-// Export to server.js
 
