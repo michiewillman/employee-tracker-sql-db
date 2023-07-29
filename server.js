@@ -1,7 +1,7 @@
 const { prompt } = require("inquirer");
 const db = require("./db/queries");
 
-const mainAction = [
+const mainPrompt = [
   {
     type: "list",
     name: "action",
@@ -22,7 +22,7 @@ const mainAction = [
 // Ask user for main action choice
 // Then find the switch case that matches
 function askUser() {
-  prompt(mainAction).then((answers) => {
+  prompt(mainPrompt).then((answers) => {
     switch (answers.action) {
       case "View all employees":
         viewAllEmployees();
@@ -43,7 +43,7 @@ function askUser() {
         addDepartment();
         break;
       case "Update employee":
-        updateEmployee();
+        updateEmployeeRole();
         break;
       default:
         process.exit();
@@ -76,53 +76,56 @@ function veiwAllDepartments() {
 }
 
 function addEmployee() {
+  let roleData;
+  let managerData;
+
   db.findAllRoles().then(([data]) => {
-    const roleData = data.map(({ title, id }) => ({
+    return (roleData = data.map(({ title, id }) => ({
       title: title,
       value: id,
-    }));
-    db.findAllEmployees().then(([data]) => {
-      const managerData = data.map(({ first_name, last_name, id }) => ({
-        name: `${first_name} ${last_name}`,
-        value: id,
-      }));
-
-      prompt(
-        [
-          {
-            name: "first_name",
-            type: "input",
-            message: "What is the employee's first name?",
-          },
-          {
-            name: "last_name",
-            type: "input",
-            message: "What is the employee's last name?",
-          },
-          {
-            name: "title",
-            type: "list",
-            message: "What is the employee's role?",
-            choices: roleData,
-          },
-          {
-            name: "manager_id",
-            type: "list",
-            message: "Who is their manager?",
-            choices: managerData,
-          },
-        ]
-          .then((res) => {
-            db.insertEmployee(res);
-            res.json(`Employee has been added.`);
-          })
-          .then(prompt(mainPrompt))
-          .catch((error) => {
-            console.status(404).json(`Sorry, error adding employee.`);
-          })
-      );
-    });
+    })));
   });
+  db.findAllEmployees().then(([data]) => {
+    return (managerData = data.map(({ first_name, last_name, id }) => ({
+      name: `${first_name} ${last_name}`,
+      value: id,
+    })));
+  });
+
+  prompt(
+    [
+      {
+        name: "first_name",
+        type: "input",
+        message: "What is the employee's first name?",
+      },
+      {
+        name: "last_name",
+        type: "input",
+        message: "What is the employee's last name?",
+      },
+      {
+        name: "title",
+        type: "list",
+        message: "What is the employee's role?",
+        choices: roleData,
+      },
+      {
+        name: "manager_id",
+        type: "list",
+        message: "Who is their manager?",
+        choices: managerData,
+      },
+    ]
+      .then((res) => {
+        db.insertEmployee(res);
+        console.log(`Employee has been added.`);
+      })
+      .then(() => prompt(mainPrompt))
+      .catch((error) => {
+        console.status(404).json(error);
+      })
+  );
 }
 
 function addRole() {
@@ -148,22 +151,29 @@ function addRole() {
         message: "What is the department?",
         choices: departmentData,
       },
-    ]).then((res) => {
-      db.insertRole(res);
-    });
+    ])
+      .then((res) => {
+        db.insertRole(res);
+        console.log("Role has been added.");
+      })
+      .then(() => prompt(mainPrompt));
   });
 }
 
 function addDepartment() {
-  prompt([
-    {
-      name: "department",
-      type: "input",
-      message: "What is the name of the department?",
-    },
-  ]).then((res) => {
-    db.insertDepartment(res);
-  });
+  prompt({
+    name: "name",
+    type: "input",
+    message: "What is the name of the department?",
+  })
+    .then((res) => {
+      db.insertDepartment(res);
+      console.log("Department has been added.");
+    })
+    .then(() => prompt(mainPrompt))
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function updateEmployeeRole() {
@@ -185,7 +195,10 @@ function updateEmployeeRole() {
       message: "What is their new role?",
       choices: roleData,
     },
-  ]).then((res) => {
-    db.updateEmployee(res);
-  });
+  ])
+    .then((res) => {
+      db.updateEmployee(res);
+      console.log("Employee has been updated.");
+    })
+    .then(prompt(mainPrompt));
 }
