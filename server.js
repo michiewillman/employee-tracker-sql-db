@@ -75,25 +75,23 @@ function veiwAllDepartments() {
   });
 }
 
-function addEmployee() {
-  let roleData;
-  let managerData;
+async function addEmployee() {
+  try {
+    const [roleData, managerData] = await Promise.all([
+      db
+        .findAllRoles()
+        .then(([data]) =>
+          data.map(({ title, id }) => ({ name: title, value: id }))
+        ),
+      db.findAllEmployees().then(([data]) =>
+        data.map(({ first_name, last_name, id }) => ({
+          name: `${first_name} ${last_name}`,
+          value: id,
+        }))
+      ),
+    ]);
 
-  db.findAllRoles().then(([data]) => {
-    return (roleData = data.map(({ title, id }) => ({
-      title: title,
-      value: id,
-    })));
-  });
-  db.findAllEmployees().then(([data]) => {
-    return (managerData = data.map(({ first_name, last_name, id }) => ({
-      name: `${first_name} ${last_name}`,
-      value: id,
-    })));
-  });
-
-  prompt(
-    [
+    const res = await prompt([
       {
         name: "first_name",
         type: "input",
@@ -105,7 +103,7 @@ function addEmployee() {
         message: "What is the employee's last name?",
       },
       {
-        name: "title",
+        name: "role_id",
         type: "list",
         message: "What is the employee's role?",
         choices: roleData,
@@ -116,16 +114,13 @@ function addEmployee() {
         message: "Who is their manager?",
         choices: managerData,
       },
-    ]
-      .then((res) => {
-        db.insertEmployee(res);
-        console.log(`Employee has been added.`);
-      })
-      .then(() => prompt(mainPrompt))
-      .catch((error) => {
-        console.status(404).json(error);
-      })
-  );
+    ]);
+    await db.insertEmployee(res);
+    console.log(`Employee has been added.`);
+    prompt(mainPrompt);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function addRole() {
