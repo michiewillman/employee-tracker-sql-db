@@ -76,7 +76,6 @@ function veiwAllDepartments() {
 }
 
 function addEmployee() {
-
   prompt(
     [
       {
@@ -93,7 +92,7 @@ function addEmployee() {
         name: "role",
         type: "list",
         message: "What is the employee's role?",
-        choices: ,
+        // choices: ,
       },
       {
         name: "manager",
@@ -117,26 +116,26 @@ function addRole() {
       name: name,
       value: id,
     }));
-  });
-  prompt([
-    {
-      name: "title",
-      type: "input",
-      message: "What is the role title?",
-    },
-    {
-      name: "salary",
-      type: "input",
-      message: "What is the salary?",
-    },
-    {
-      name: "department_id",
-      type: "list",
-      message: "What is the department?",
-      choices: departmentData,
-    },
-  ]).then((res) => {
-    db.insertRole(res);
+    prompt([
+      {
+        name: "title",
+        type: "input",
+        message: "What is the role title?",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "What is the salary?",
+      },
+      {
+        name: "department_id",
+        type: "list",
+        message: "What is the department?",
+        choices: departmentData,
+      },
+    ]).then((res) => {
+      db.insertRole(res);
+    });
   });
 }
 
@@ -155,18 +154,18 @@ function addDepartment() {
 function updateEmployeeRole() {
   db.findAllRoles().then(([data]) => {
     const roleData = data.map(({ name, id }) => ({
-      name: name,
+      title: name,
       value: id,
     }));
   });
   prompt([
     {
-      name: "employeeId",
+      name: "id",
       type: "input",
       message: "What is the employee's id?",
     },
     {
-      name: "newRole",
+      name: "title",
       type: "list",
       message: "What is their new role?",
       choices: roleData,
