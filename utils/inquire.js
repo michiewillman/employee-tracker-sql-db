@@ -25,7 +25,7 @@ function askUser() {
   prompt(actionPrompt).then((answers) => {
     switch (answers.action) {
       case "View all employees":
-        viewAllEmployees()
+        viewAllEmployees();
         break;
       case "View all roles":
         findAllRoles();
@@ -51,3 +51,4 @@ function askUser() {
   });
 }
 
+askUser();
