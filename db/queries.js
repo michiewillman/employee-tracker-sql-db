@@ -6,7 +6,6 @@ class DB {
     this.connection = connection;
   }
 
-  // TODO: transform these functions into promises? async/await
   findAllRoles() {
     return connection.promise().query("SELECT * FROM roles");
   }
@@ -20,7 +19,7 @@ class DB {
   }
 
   findManagers(employee) {
-    return connection.query(
+    return connection.promise().query(
       "SELECT * FROM employees WHERE !id = ?",
       employee,
       (err, result) => {
@@ -33,7 +32,7 @@ class DB {
   }
 
   insertEmployee(employee) {
-    return connection.query(
+    return connection.promise().query(
       "INSERT INTO employees () VALUES ?",
       employee,
       (err, result) => {
@@ -46,13 +45,13 @@ class DB {
   }
 
   insertRole(role) {
-    return connection.query(
+    return connection.promise().query(
       "INSERT INTO roles SET ?",
       role);
   }
 
   insertDepartment(department) {
-    return connection.query(
+    return connection.promise().query(
       "INSERT INTO departments () VALUES ?",
       department,
       (err, result) => {
@@ -65,7 +64,7 @@ class DB {
   }
 
   updateEmployee(employee) {
-    return connection.query(
+    return connection.promise().query(
       "SELECT * FROM employees WHERE id = ?",
       employee,
       (err, result) => {
@@ -78,5 +77,4 @@ class DB {
   }
 }
 
-// Export queries to use in actions.js
 module.exports = new DB(connection);
