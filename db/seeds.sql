@@ -13,11 +13,9 @@ VALUES ("Customer Support", 60000, 1),
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES 
-("Greg", "Harbour", 1, 7),
-("Chelsea", "Rudd", 2, 8),
-("Karen", "McCormick", 3, 6),
-("Dave", "Dawson", 4, 7),
-("Olivia", "Stonish", 5, 8),
-("Shane", "Anderson", 6, 7),
-("Jonathan", "Hyde", 7, 8),
-("Alexander", "Merritt", 8, 7);
+("Greg", "Harbour", 8, null),
+("Chelsea", "Rudd", 7, null),
+("Karen", "McCormick", 3, 1),
+("Dave", "Dawson", 4, 2),
+("Olivia", "Stonish", 5, 1),
+("Shane", "Anderson", 6, 1);

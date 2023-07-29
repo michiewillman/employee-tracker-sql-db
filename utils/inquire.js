@@ -1,5 +1,5 @@
 const { prompt } = require("inquirer");
-const { runAction } = require("./runAction");
+const { viewAllEmployees } = require("../lib/actions");
 
 const actionPrompt = [
   {
@@ -23,11 +23,33 @@ const actionPrompt = [
 // Then find the switch case that matches
 function askUser() {
   prompt(actionPrompt).then((answers) => {
-    runAction(answers).catch((err) => {
-      console.log(err);
-    });
+    switch (answers.action) {
+      case "View all employees":
+        viewAllEmployees()
+        break;
+      case "View all roles":
+        // Actions.findAllRoles();
+        break;
+      case "View all departments":
+        // Actions.findAllDepartments();
+        break;
+      case "Add employee":
+        // Actions.insertEmployee();
+        break;
+      case "Add role":
+        // Actions.insertRole();
+        break;
+      case "Add department":
+        // Actions.insertDepartment();
+        break;
+      case "Update employee":
+        // Actions.updateEmployee();
+        break;
+      default:
+        process.exit();
+    }
   });
 }
 
 // Export to server.js
-module.exports = { askUser };
+
