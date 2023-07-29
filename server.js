@@ -153,6 +153,12 @@ function addDepartment() {
 }
 
 function updateEmployeeRole() {
+  db.findAllRoles().then(([data]) => {
+    const roleData = data.map(({ name, id }) => ({
+      name: name,
+      value: id,
+    }));
+  });
   prompt([
     {
       name: "employeeId",
@@ -163,14 +169,9 @@ function updateEmployeeRole() {
       name: "newRole",
       type: "list",
       message: "What is their new role?",
-      choices: map(allRoles),
+      choices: roleData,
     },
   ]).then((res) => {
-    // TODO: fix role & logic
-    let employee = {
-      id: res.id,
-      role_id: res.role_id,
-    };
-    db.updateEmployee(employee);
+    db.updateEmployee(res);
   });
 }
