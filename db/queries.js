@@ -17,14 +17,14 @@ class DB {
   findAllDepartments() {
     return connection
       .promise()
-      .query("SELECT department.name, department.id FROM departments");
+      .query("SELECT department.name, department.id FROM department");
   }
 
   findAllEmployees() {
     return connection
       .promise()
       .query(
-        "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name as department, roles.salary, CONCAT(employees.first_name, ' ', employees.last_name) AS manager FROM employees LEFT JOIN roles ON employees.role_id = roles.id LEFT JOIN departments ON roles.department_id = departments.id LEFT JOIN employees AS manager ON employees.manager_id = employees.id"
+        "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(employee.first_name, ' ', employee.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = employee.id"
       );
   }
 
@@ -32,23 +32,23 @@ class DB {
     return connection
       .promise()
       .query(
-        "SELECT id, first_name, last_name FROM employees WHERE id != ?",
+        "SELECT id, first_name, last_name FROM employee WHERE id != ?",
         employee
       );
   }
 
   insertEmployee(employee) {
-    return connection.promise().query("INSERT INTO employees SET ?", employee);
+    return connection.promise().query("INSERT INTO employee SET ?", employee);
   }
 
   insertRole(role) {
-    return connection.promise().query("INSERT INTO roles SET ?", role);
+    return connection.promise().query("INSERT INTO role SET ?", role);
   }
 
   insertDepartment(department) {
     return connection
       .promise()
-      .query("INSERT INTO departments SET ?", department);
+      .query("INSERT INTO department SET ?", department);
   }
 
   updateEmployee(employee) {
