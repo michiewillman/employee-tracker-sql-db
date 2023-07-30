@@ -117,19 +117,21 @@ async function addEmployee() {
     ]);
     await db.insertEmployee(res);
     console.log(`Employee has been added.`);
-    prompt(mainPrompt);
+    askUser();
   } catch (error) {
     console.log(error);
   }
 }
 
-function addRole() {
-  db.findAllDepartments().then(([data]) => {
-    const departmentData = data.map(({ name, id }) => ({
-      name: name,
-      value: id,
-    }));
-    prompt([
+async function addRole() {
+  try {
+    const departmentData = await db.findAllDepartments().then(([data]) =>
+      data.map(({ name, id }) => ({
+        name: name,
+        value: id,
+      }))
+    );
+    const res = await prompt([
       {
         name: "title",
         type: "input",
@@ -146,54 +148,55 @@ function addRole() {
         message: "What is the department?",
         choices: departmentData,
       },
-    ])
-      .then((res) => {
-        db.insertRole(res);
-        console.log("Role has been added.");
-      })
-      .then(() => prompt(mainPrompt));
-  });
+    ]);
+    await db.insertRole(res);
+    console.log("Role has been added.");
+    askUser();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function addDepartment() {
-  prompt({
-    name: "name",
-    type: "input",
-    message: "What is the name of the department?",
-  })
-    .then((res) => {
-      db.insertDepartment(res);
-      console.log("Department has been added.");
-    })
-    .then(() => prompt(mainPrompt))
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-function updateEmployeeRole() {
-  db.findAllRoles().then(([data]) => {
-    const roleData = data.map(({ name, id }) => ({
-      title: name,
-      value: id,
-    }));
-  });
-  prompt([
-    {
-      name: "id",
+async function addDepartment() {
+  try {
+    const res = await prompt({
+      name: "name",
       type: "input",
-      message: "What is the employee's id?",
-    },
-    {
-      name: "title",
-      type: "list",
-      message: "What is their new role?",
-      choices: roleData,
-    },
-  ])
-    .then((res) => {
-      db.updateEmployee(res);
-      console.log("Employee has been updated.");
-    })
-    .then(prompt(mainPrompt));
+      message: "What is the name of the department?",
+    });
+    db.insertDepartment(res);
+    console.log("Department has been added.");
+    askUser();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function updateEmployeeRole() {
+  try {
+    const roleData = await db.findAllRoles().then(([data]) => {
+      data.map(({ name, id }) => ({
+        title: name,
+        value: id,
+      }));
+    });
+    const res = await prompt([
+      {
+        name: "id",
+        type: "input",
+        message: "What is the employee's id?",
+      },
+      {
+        name: "title",
+        type: "list",
+        message: "What is their new role?",
+        choices: roleData,
+      },
+    ]);
+    await db.updateEmployee(res);
+    console.log("Employee has been updated.");
+    askUser();
+  } catch (error) {
+    console.log(error);
+  }
 }
