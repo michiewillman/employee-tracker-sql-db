@@ -38,7 +38,7 @@ node server.js
 
 ## Usage
 
-For a video showing the application's functionality, [click here.]()
+For a video showing the application's functionality, [click here.](https://watch.screencastify.com/v/MQwLMNLOUSadPGlrghsk)
 
 # Deployment
 
