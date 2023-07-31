@@ -42,7 +42,7 @@ function askUser() {
       case "Add department":
         addDepartment();
         break;
-      case "Update employee":
+      case "Update employee role":
         updateEmployeeRole();
         break;
       default:
@@ -186,9 +186,15 @@ async function addDepartment() {
 
 async function updateEmployeeRole() {
   try {
-    const employeeData = await db.findAllDepartments().then(([data]) =>
-      data.map(({ name, id }) => ({
-        name: name,
+    const employeeData = await db.findAllEmployees().then(([data]) =>
+      data.map(({ first_name, last_name, id }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id,
+      }))
+    );
+    const roleData = await db.findAllRoles().then(([data]) =>
+      data.map(({ title, id }) => ({
+        name: title,
         value: id,
       }))
     );
@@ -200,9 +206,10 @@ async function updateEmployeeRole() {
         choices: employeeData,
       },
       {
-        name: "title",
-        type: "input",
+        name: "role_id",
+        type: "list",
         message: "What is their new role?",
+        choices: roleData,
       },
     ]);
     await db.updateEmployee(res);
