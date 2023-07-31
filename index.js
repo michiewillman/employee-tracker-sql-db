@@ -13,7 +13,7 @@ const mainPrompt = [
       "Add employee",
       "Add role",
       "Add department",
-      "Update employee",
+      "Update employee role",
       "Quit",
     ],
   },
@@ -176,7 +176,7 @@ async function addDepartment() {
       type: "input",
       message: "What is the name of the department?",
     });
-    db.insertDepartment(res);
+    await db.insertDepartment(res);
     console.log("Department has been added.");
     askUser();
   } catch (error) {
@@ -186,23 +186,23 @@ async function addDepartment() {
 
 async function updateEmployeeRole() {
   try {
-    const roleData = await db.findAllRoles().then(([data]) => {
+    const employeeData = await db.findAllDepartments().then(([data]) =>
       data.map(({ name, id }) => ({
-        title: name,
+        name: name,
         value: id,
-      }));
-    });
+      }))
+    );
     const res = await prompt([
       {
         name: "id",
-        type: "input",
-        message: "What is the employee's id?",
+        type: "list",
+        message: "Please choose an employee to update.",
+        choices: employeeData,
       },
       {
         name: "title",
-        type: "list",
+        type: "input",
         message: "What is their new role?",
-        choices: roleData,
       },
     ]);
     await db.updateEmployee(res);

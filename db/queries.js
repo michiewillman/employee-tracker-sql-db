@@ -51,10 +51,14 @@ class DB {
       .query("INSERT INTO department SET ?", department);
   }
 
-  updateEmployee(employee) {
-    return connection.promise().query(
-      "SELECT * FROM employees SET ? WHERE id = ?",
-      employee.title, employee.id);
+  // Update an employee's role
+  updateEmployeeRole(employee) {
+    return this.connection
+      .promise()
+      .query("UPDATE employee SET role_id = ? WHERE id = ?", [
+        employee.role_id,
+        employee.id,
+      ]);
   }
 }
 
