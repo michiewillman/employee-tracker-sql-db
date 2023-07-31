@@ -30,10 +30,28 @@ Install the dependencies:
 npm install
 ```
 
-Run the application:
+Run MySQL in terminal, then enter your password.
 
 ```bash
-node server.js
+mysql -u root -p
+```
+
+Source database schema file:
+
+```bash
+source <path to schema.sql>
+```
+
+Source database seeds:
+
+```bash
+source <path to seeds.sql>
+```
+
+Close the MySQL terminal and run the application in node:
+
+```bash
+node index.js
 ```
 
 ## Usage
