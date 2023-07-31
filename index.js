@@ -55,24 +55,36 @@ function askUser() {
 askUser();
 
 function viewAllEmployees() {
-  db.findAllEmployees().then(([data]) => {
-    console.table(data);
-    askUser();
-  });
+  db.findAllEmployees()
+    .then(([data]) => {
+      console.table(data);
+      askUser();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function viewAllRoles() {
-  db.findAllRoles().then(([data]) => {
-    console.table(data);
-    askUser();
-  });
+  db.findAllRoles()
+    .then(([data]) => {
+      console.table(data);
+      askUser();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function veiwAllDepartments() {
-  db.findAllDepartments().then(([data]) => {
-    console.table(data);
-    askUser();
-  });
+  db.findAllDepartments()
+    .then(([data]) => {
+      console.table(data);
+      askUser();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 async function addEmployee() {

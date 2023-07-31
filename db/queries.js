@@ -10,7 +10,7 @@ class DB {
     return connection
       .promise()
       .query(
-        "SELECT role.title, role.id, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id"
+        "SELECT role.title, role.id, department.name AS department, role.salary FROM role LEFT JOIN department ON role.department_id = department.id"
       );
   }
 
@@ -26,7 +26,6 @@ class DB {
       .query(
         "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id"
       );
-    // not working: SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(employee.first_name, ' ', employee.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = employee.id
   }
 
   findManagers(employee) {
@@ -53,10 +52,9 @@ class DB {
   }
 
   updateEmployee(employee) {
-    // return connection.promise().query(
-    //   "SELECT * FROM employees WHERE id = ?",
-    //   employee);
-    console.log("Logic still needed");
+    return connection.promise().query(
+      "SELECT * FROM employees SET ? WHERE id = ?",
+      employee.title, employee.id);
   }
 }
 
